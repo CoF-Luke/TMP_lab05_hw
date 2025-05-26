@@ -13,13 +13,13 @@ public:
 	MOCK_METHOD(void, Unlock, (), (override));
 };
 
-TESTS(AccountTests, GetBalance)
+TEST(AccountTests, GetBalance)
 {
     Account acc(24, 42);
     EXPECT_EQ(acc.GetBalance(), 42);
 }
 
-TESTS(AccountTests, ChangeBalanceIfLocked)
+TEST(AccountTests, ChangeBalanceIfLocked)
 {
     Account acc(24, 42);
     acc.Lock();
@@ -27,7 +27,7 @@ TESTS(AccountTests, ChangeBalanceIfLocked)
     EXPECT_EQ(acc.GetBalance(), 1000);
 }
 
-TESTS(AccountTests, ChangeBalanceIfLockedWithNegativeDiff)
+TEST(AccountTests, ChangeBalanceIfLockedWithNegativeDiff)
 {
     Account acc(24, 42);
     acc.Lock();
@@ -35,26 +35,26 @@ TESTS(AccountTests, ChangeBalanceIfLockedWithNegativeDiff)
     EXPECT_EQ(acc.GetBalance(), -958);
 }
 
-TESTS(AccountTests, ChangeBalanceIfUnlocked)
+TEST(AccountTests, ChangeBalanceIfUnlocked)
 {
     Account acc(24, 42);
     EXPECT_THROW(acc.ChangeBalance(-1000), std::runtime_error);
 }
 
-TESTS(AccountTests, LockTwice)
+TEST(AccountTests, LockTwice)
 {
     Account acc(24, 42);
     account.Lock();
 	EXPECT_THROW(acc.Lock(), std::runtime_error);
 }
 
-TESTS(AccountTests, UnlockTwice)
+TEST(AccountTests, UnlockTwice)
 {
     Account acc(24, 42);
 	EXPECT_THROW(acc.Unlock(), std::runtime_error);
 }
 
-TESTS(AccountTests, LockUnlock)
+TEST(AccountTests, LockUnlock)
 {
     Account acc(24, 42);
     acc.Lock();

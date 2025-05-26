@@ -19,10 +19,10 @@ target_include_directories(banking PUBLIC
 
 
 if(BUILD_TESTS)
-  enable_testing()
-  add_subdirectory(third-party/gtest)
-  file(GLOB BANKING_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp)
-  add_executable(check ${BANKING_TEST_SOURCES})
-  target_link_libraries(check banking gtest_main gmock_main)
-  add_test(NAME check COMMAND check)
+    enable_testing()
+    add_subdirectory(third-party/gtest)
+    file(GLOB BANKING_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp)
+    add_executable(check ${BANKING_TEST_SOURCES})
+    target_link_libraries(check banking gtest_main gmock_main)
+    add_test(NAME check COMMAND check)
 endif()
