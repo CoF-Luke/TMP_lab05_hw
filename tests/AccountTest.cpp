@@ -44,7 +44,7 @@ TEST(AccountTests, ChangeBalanceIfUnlocked)
 TEST(AccountTests, LockTwice)
 {
     Account acc(24, 42);
-    account.Lock();
+    acc.Lock();
 	EXPECT_THROW(acc.Lock(), std::runtime_error);
 }
 
