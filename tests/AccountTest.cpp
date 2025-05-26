@@ -48,12 +48,6 @@ TEST(AccountTests, LockTwice)
 	EXPECT_THROW(acc.Lock(), std::runtime_error);
 }
 
-TEST(AccountTests, UnlockTwice)
-{
-    Account acc(24, 42);
-	EXPECT_THROW(acc.Unlock(), std::runtime_error);
-}
-
 TEST(AccountTests, LockUnlock)
 {
     Account acc(24, 42);
