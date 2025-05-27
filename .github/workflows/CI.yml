@@ -30,6 +30,6 @@ jobs:
     run: build/check --enable-gcov
 
   - name: Measure coverage
-  env:
-    COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-  run: coveralls -r build
+    env:
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+    run: coveralls -r build
