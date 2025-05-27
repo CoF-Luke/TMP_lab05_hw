@@ -3,8 +3,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-/* using ::testing::_;
-using ::testing::Return;
+using ::testing::_;
+/* using ::testing::Return;
 using ::testing::InSequence;
 using ::testing::Throw; */
 
@@ -65,5 +65,5 @@ TEST(Transaction_test, test_SaveToDataBase)
     Account to(24, 500);
     MockTransaction tr;
     EXPECT_CALL(tr, SaveToDataBase(_, _, _)).Times(1);
-    tr.SaveToDataBase(acc1, acc2, 300);
+    tr.SaveToDataBase(from, to, 300);
 }
