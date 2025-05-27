@@ -47,7 +47,7 @@ TEST(TransactionTests, TransactionIfEnoughToDebit)
     EXPECT_TRUE(to.GetBalance() == 800);
 }
 
-TEST(TransactionTests, TransactionIfEnoughToDebit)
+TEST(TransactionTests, TransactionIfNotEnoughToDebit)
 {
     Account from(42, 350);
     Account to(24, 500);
