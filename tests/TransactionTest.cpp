@@ -43,7 +43,7 @@ TEST(TransactionTests, TransactionIfEnoughToDebit)
     Account to(24, 500);
 	Transaction tr;
 	EXPECT_TRUE(tr.Make(from, to, 300));
-    EXPECT_TRUE(from.GetBalance() == (700 - fee));
+    EXPECT_TRUE(from.GetBalance() == (700 - tr.fee()));
     EXPECT_TRUE(to.GetBalance() == 800);
 }
 
@@ -53,6 +53,7 @@ TEST(TransactionTests, TransactionIfNotEnoughToDebit)
     Account to(24, 500);
 	Transaction tr;
     tr.set_fee(51);
+    EXPECT_EQ(tr.fee(), 51);
 	EXPECT_EQ(tr.Make(from, to, 300), false);
     EXPECT_TRUE(from.GetBalance() == 350);
     EXPECT_TRUE(to.GetBalance() == 500);
