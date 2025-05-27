@@ -28,7 +28,7 @@ if(BUILD_TESTS)
     add_test(NAME check COMMAND check)
 endif()
 
-if(COVERAGE)
+if(COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(check PRIVATE --coverage)
     target_link_options(check PRIVATE --coverage)
 endif()
