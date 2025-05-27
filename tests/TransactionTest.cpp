@@ -37,3 +37,23 @@ TEST(TransactionTests, SumLessThanOneHundred)
 	EXPECT_THROW(tr.Make(from, to, 50), std::logic_error);
 }
 
+TEST(TransactionTests, TransactionIfEnoughToDebit)
+{
+    Account from(42, 1000);
+    Account to(24, 500);
+	Transaction tr;
+	EXPECT_TRUE(tr.Make(from, to, 300));
+    EXPECT_TRUE(from.GetBalance() == (700 - fee));
+    EXPECT_TRUE(to.GetBalance() == 800);
+}
+
+TEST(TransactionTests, TransactionIfEnoughToDebit)
+{
+    Account from(42, 350);
+    Account to(24, 500);
+	Transaction tr;
+    tr.set_fee(51);
+	EXPECT_EQ(tr.Make(from, to, 300), false);
+    EXPECT_TRUE(from.GetBalance() == 350);
+    EXPECT_TRUE(to.GetBalance() == 500);
+}
