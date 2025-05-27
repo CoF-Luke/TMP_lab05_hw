@@ -4,6 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(BUILD_TESTS "Build tests" OFF)
+option(COVERAGE "Enable coverage checking" OFF)
 
 project(lab05hw)
 
@@ -25,4 +26,9 @@ if(BUILD_TESTS)
     add_executable(check ${BANKING_TEST_SOURCES})
     target_link_libraries(check banking gtest_main gmock_main)
     add_test(NAME check COMMAND check)
+endif()
+
+if(COVERAGE)
+    target_compile_options(check PRIVATE --coverage)
+    target_link_options(check PRIVATE --coverage)
 endif()

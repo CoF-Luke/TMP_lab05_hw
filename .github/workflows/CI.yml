@@ -14,14 +14,34 @@ jobs:
   steps:
   - uses: actions/checkout@v4
 
+  - name: Install dependencies
+    run: sudo apt-get update && sudo apt-get install -y gcovr lcov
+  
   - name: Cloning gtest
     run: git clone https://github.com/google/googletest.git third-party/gtest
 
+  - name: Install cpp-coveralls
+    run: pip install cpp-coveralls
+
   - name: Config banking
-    run: cmake -H. -B${{github.workspace}}/build -DBUILD_TESTS=ON
+    run: cmake -H. -B${{github.workspace}}/build -DBUILD_TESTS=ON -DCOVERAGE=ON
 
   - name: Build banking
     run: cmake --build ${{github.workspace}}/build
 
   - name: Run tests
-    run: build/check
+    run: build/check --enable-gcov
+
+  - name: Generate coverage report
+    run: |
+      cd build
+      lcov -d . -c -o coverage.info
+      lcov -r coverage.info '/usr/*' '*/test/*' '*/third_party/*' -o coverage.info
+      genhtml coverage.info -o coverage_report
+      echo "Coverage report generated in build/coverage_report"
+
+  - name: Send coverage data to Coveralls
+    run: |
+      cd build
+      gcovr --exclude "test" --exclude "tests" -r . --xml | cpp-coveralls --root . -j coverage.json
+      cpp-coveralls --repo-token ${{ secrets.GITHUB_TOKEN }} --json coverage.json
