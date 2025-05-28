@@ -11,7 +11,6 @@ option(COVERAGE "Enable coverage checking" ON)
 project(lab05hw)
 
 
-add_subdirectory(third-party/gtest)
 
 add_library(banking
     banking/Account.cpp
@@ -30,7 +29,12 @@ if(COVERAGE)
     target_link_libraries(banking PRIVATE gcov)
 endif()
 
-
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
+)
+FetchContent_MakeAvailable(googletest)
 
 add_executable(banking_tests
     tests/AccountTest.cpp
