@@ -11,6 +11,8 @@ option(COVERAGE "Enable coverage checking" ON)
 project(lab05hw)
 
 
+add_subdirectory(third-party/gtest)
+
 add_library(banking
     banking/Account.cpp
     banking/Transaction.cpp
@@ -55,3 +57,8 @@ endif()
 
 enable_testing()
 add_test(NAME banking_tests COMMAND banking_tests)
+
+
+
+
+
