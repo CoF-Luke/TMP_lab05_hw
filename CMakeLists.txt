@@ -20,18 +20,19 @@ target_include_directories(banking PUBLIC
 )
 
 
-if(BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(third-party/gtest)
-    file(GLOB BANKING_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp)
-    add_executable(check ${BANKING_TEST_SOURCES})
-    target_link_libraries(check banking gtest gmock gtest_main gmock_main)
-    add_test(NAME check COMMAND check)
-endif()
+enable_testing()
+add_subdirectory(third-party/gtest)
+file(GLOB BANKING_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp)
+add_executable(check ${BANKING_TEST_SOURCES})
+target_link_libraries(check banking gtest gmock gtest_main gmock_main)
 
 if(COVERAGE)
     target_compile_options(banking PRIVATE -fprofile-arcs -ftest-coverage -O0)
-    target_link_libraries(banking PRIVATE gcov)
+    target_link_libraries(banking gcov)
     target_compile_options(check PRIVATE -fprofile-arcs -ftest-coverage -O0)
-    target_link_libraries(check PRIVATE gcov)
+    target_link_libraries(check gcov)
 endif()
+
+add_test(NAME check COMMAND check)
+
+
