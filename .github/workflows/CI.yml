@@ -39,7 +39,7 @@ jobs:
       cd build
       lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch --rc branch_coverage=1 --rc geninfo_unexecuted_blocks=1
       lcov --remove coverage.info '*/tests/*' '*/_deps/*' '/usr/*' --output-file coverage.info
-      lcov --ignore-errors unused ...
+      lcov --list coverage.info || echo "Failed to list coverage.info"
   
   - name: Coveralls
     uses: coverallsapp/github-action@master
