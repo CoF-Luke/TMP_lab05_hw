@@ -9,6 +9,12 @@ option(COVERAGE "Enable coverage checking" ON)
 
 project(lab05hw)
 
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
+)
+FetchContent_MakeAvailable(googletest)
 
 add_library(banking
     banking/Account.cpp
