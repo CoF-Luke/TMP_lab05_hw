@@ -11,7 +11,6 @@ option(COVERAGE "Enable coverage checking" ON)
 project(lab05hw)
 
 
-
 add_library(banking
     banking/Account.cpp
     banking/Transaction.cpp
@@ -21,47 +20,43 @@ target_include_directories(banking PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/banking
 )
 
+if(BUILD_TESTS)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
+    )
+    FetchContent_MakeAvailable(googletest)
 
+    add_executable(banking_tests
+        tests/AccountTest.cpp
+        tests/TransactionTest.cpp
+    )
 
-if(COVERAGE)
-    message(STATUS "Coverage build enabled")
-    target_compile_options(banking PRIVATE -fprofile-arcs -ftest-coverage -O0)
-    target_link_libraries(banking PRIVATE gcov)
+    target_include_directories(banking_tests 
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+    )
+
+    target_link_libraries(banking_tests
+        PRIVATE
+        banking
+        gtest
+        gmock
+        gtest_main
+    )
+
+    if(COVERAGE)
+        target_compile_options(banking PRIVATE -fprofile-arcs -ftest-coverage -O0)
+        target_link_libraries(banking PRIVATE gcov)
+        target_compile_options(banking_tests PRIVATE -fprofile-arcs -ftest-coverage -O0)
+        target_link_libraries(banking_tests PRIVATE gcov)
+    endif()
+
+    enable_testing()
+    add_test(NAME banking_tests COMMAND banking_tests)
 endif()
-
-include(FetchContent)
-FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
-)
-FetchContent_MakeAvailable(googletest)
-
-add_executable(banking_tests
-    tests/AccountTest.cpp
-    tests/TransactionTest.cpp
-)
-
-target_include_directories(banking_tests PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
-
-target_link_libraries(banking_tests
-    PRIVATE
-    banking
-    gtest
-    gmock
-    gtest_main
-)
-
-if(COVERAGE)
-    target_compile_options(banking_tests PRIVATE -fprofile-arcs -ftest-coverage -O0)
-    target_link_libraries(banking_tests PRIVATE gcov)
-endif()
-
-enable_testing()
-add_test(NAME banking_tests COMMAND banking_tests)
-
 
 
 
