@@ -19,11 +19,11 @@ public:
 	MOCK_METHOD(void, Unlock, (), (override));
 };
 
-/* class MockTransaction : public Transaction
+class MockTransaction : public Transaction
 {
 public:
 	MOCK_METHOD(void, SaveToDataBase, (Account&, Account&, int), (override));
-}; */
+};
 
 TEST(TransactionTests, SameAccounts)
 {
@@ -90,11 +90,11 @@ TEST(Transaction_test, test_Make_CheckCallAccountMethods)
     tr.Make(from, to, 300);
 }
 
-/* TEST(Transaction_test, test_Make_CheckCallSaveToDataBase)
+TEST(Transaction_test, test_Make_CheckCallSaveToDataBase)
 {
     Account from(42, 1000);
     Account to(24, 500);
     MockTransaction tr;
     EXPECT_CALL(tr, SaveToDataBase()).Times(1);
     tr.Make(from, to, 300);
-} */
+}
