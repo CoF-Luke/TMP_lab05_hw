@@ -59,11 +59,21 @@ TEST(TransactionTests, TransactionIfNotEnoughToDebit)
     EXPECT_TRUE(to.GetBalance() == 500);
 }
 
-TEST(Transaction_test, test_SaveToDataBase)
+TEST(Transaction_test, test_SaveToDataBase_CheckCallAccountMethods)
+{
+    Account from(42, 1000);
+    Account to(24, 500);
+    MockTransaction tr;
+    EXPECT_CALL(tr, id()).Times(4);
+    EXPECT_CALL(tr, GetBalance()).Times(2);
+    tr.SaveToDataBase(from, to, 300);
+}
+
+/* TEST(Transaction_test, test_SaveToDataBase)
 {
     Account from(42, 1000);
     Account to(24, 500);
     MockTransaction tr;
     EXPECT_CALL(tr, SaveToDataBase(_, _, _)).Times(1);
     tr.SaveToDataBase(from, to, 300);
-}
+} */
