@@ -8,6 +8,8 @@ using ::testing::_;
 using ::testing::InSequence;
 using ::testing::Throw; */
 
+class MockAccount;
+
 class MockTransaction : public Transaction
 {
 public:
