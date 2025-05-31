@@ -75,17 +75,26 @@ TEST(Transaction_test, test_Make_CheckCallAccountMethods)
     MockAccount from(42, 1000);
     MockAccount to(24, 500);
     Transaction tr;
+
     EXPECT_CALL(from, GetBalance()).Times(2);
     EXPECT_CALL(to, GetBalance()).Times(1);
+
+    EXPECT_CALL(from, ChangeBalance()).Times(1);
+    EXPECT_CALL(to, ChangeBalance()).Times(1);
+
+    EXPECT_CALL(from, Lock()).Times(1);
+    EXPECT_CALL(from, Unlock()).Times(1);
+    EXPECT_CALL(to, Lock()).Times(1);
+    EXPECT_CALL(to, Unlock()).Times(1);
+
     tr.Make(from, to, 300);
 }
 
 /* TEST(Transaction_test, test_Make_CheckCallSaveToDataBase)
 {
-    MockAccount from(42, 1000);
-    MockAccount to(24, 500);
+    Account from(42, 1000);
+    Account to(24, 500);
     MockTransaction tr;
     EXPECT_CALL(tr, SaveToDataBase()).Times(1);
     tr.Make(from, to, 300);
-}
- */
+} */
