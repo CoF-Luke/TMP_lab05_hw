@@ -70,14 +70,14 @@ TEST(TransactionTests, TransactionIfNotEnoughToDebit)
     EXPECT_TRUE(to.GetBalance() == 500);
 }
 
-TEST(Transaction_test, test_SaveToDataBase_CheckCallAccountMethods)
+TEST(Transaction_test, test_Make_CheckCallAccountMethods)
 {
     MockAccount from(42, 1000);
     MockAccount to(24, 500);
     Transaction tr;
     EXPECT_CALL(from, GetBalance()).Times(1);
     EXPECT_CALL(to, GetBalance()).Times(1);
-    tr.SaveToDataBase(from, to, 300);
+    tr.Make(from, to, 300);
 }
 
 /* TEST(Transaction_test, test_Make_CheckCallSaveToDataBase)
