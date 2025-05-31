@@ -95,6 +95,6 @@ TEST(Transaction_test, test_Make_CheckCallSaveToDataBase)
     Account from(42, 1000);
     Account to(24, 500);
     MockTransaction tr;
-    EXPECT_CALL(tr, SaveToDataBase()).Times(1);
+    EXPECT_CALL(tr, SaveToDataBase(_, _, _)).Times(1);
     tr.Make(from, to, 300);
 }
