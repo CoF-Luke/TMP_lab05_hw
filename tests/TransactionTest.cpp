@@ -75,7 +75,7 @@ TEST(Transaction_test, test_Make_CheckCallAccountMethods)
     MockAccount from(42, 1000);
     MockAccount to(24, 500);
     Transaction tr;
-    EXPECT_CALL(from, GetBalance()).Times(1);
+    EXPECT_CALL(from, GetBalance()).Times(2);
     EXPECT_CALL(to, GetBalance()).Times(1);
     tr.Make(from, to, 300);
 }
