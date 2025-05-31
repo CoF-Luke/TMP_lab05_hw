@@ -8,7 +8,7 @@ using ::testing::_;
 using ::testing::InSequence;
 using ::testing::Throw; */
 
-class MockTransaction : public Transaction, public MockAccount
+class MockTransaction : public Transaction
 {
 public:
 	MOCK_METHOD(void, SaveToDataBase, (Account&, Account&, int), (override));
@@ -61,11 +61,12 @@ TEST(TransactionTests, TransactionIfNotEnoughToDebit)
 
 TEST(Transaction_test, test_SaveToDataBase_CheckCallAccountMethods)
 {
-    Account from(42, 1000);
-    Account to(24, 500);
+    MockAccount from(42, 1000);
+    MockAccount to(24, 500);
     MockTransaction tr;
     //EXPECT_CALL(tr, MockAccount.id()).Times(4);
-    EXPECT_CALL(tr, GetBalance()).Times(2);
+    EXPECT_CALL(from, GetBalance()).Times(1);
+    EXPECT_CALL(to, GetBalance()).Times(1);
     tr.SaveToDataBase(from, to, 300);
 }
 
